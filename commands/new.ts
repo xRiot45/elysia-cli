@@ -1,44 +1,30 @@
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { folders } from '../constants/folders';
+import { setupEslint } from '../libs/setupEslint';
+import { setupPrettier } from '../libs/setupPrettier';
 import { askOptions } from '../utils/prompts';
 import { runCommand } from '../utils/runCommand';
 
 export async function newProject(name: string) {
     const projectPath = join(process.cwd(), name);
 
-    // Buat project Elysia langsung dengan nama sesuai
     await runCommand(['bun', 'create', 'elysia', name], process.cwd());
 
     const options = await askOptions();
 
-    // Buat folder tambahan di dalam src/
     for (const folder of folders) {
         await mkdir(join(projectPath, 'src', folder), { recursive: true });
     }
 
     // Setup Prettier
     if (options.prettier) {
-        await writeFile(
-            join(projectPath, '.prettierrc'),
-            JSON.stringify(
-                {
-                    semi: true,
-                    singleQuote: true,
-                    trailingComma: 'all',
-                },
-                null,
-                2,
-            ),
-        );
-
-        await runCommand(['bun', 'add', '-D', 'prettier'], projectPath);
+        await setupPrettier(projectPath);
     }
 
     // Setup EsLint
     if (options.eslint) {
-        await runCommand(['bun', 'add', '-D', 'eslint'], projectPath);
-        await runCommand(['bunx', 'eslint', '--init'], projectPath);
+        await setupEslint(projectPath);
     }
 
     // Initialize Git
@@ -69,14 +55,6 @@ export async function newProject(name: string) {
     const pkgJson = JSON.parse(await readFile(pkgPath, 'utf-8'));
     pkgJson.name = name;
     await writeFile(pkgPath, JSON.stringify(pkgJson, null, 2));
-
-    // Optional: Update README.md title
-    const readmePath = join(projectPath, 'README.md');
-    try {
-        const readme = await readFile(readmePath, 'utf-8');
-        const updatedReadme = readme.replace(/^# .*/m, `# ${name}`);
-        await writeFile(readmePath, updatedReadme);
-    } catch {}
 
     console.log(`✅ Project "${name}" created successfully.`);
 }

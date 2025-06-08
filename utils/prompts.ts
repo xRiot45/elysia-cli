@@ -14,17 +14,17 @@ export async function askOptions() {
             message: 'Use Eslint for code linting? (recommended)',
             initial: true,
         },
-        {
-            type: 'confirm',
-            name: 'git',
-            message: 'Use Husky and Commit lint for commit linting? (recommended)',
-            initial: true,
-        },
-        {
-            type: 'confirm',
-            name: 'husky',
-            message: 'Initialize Git repository?',
-            initial: false,
-        },
+        // {
+        //     type: 'confirm',
+        //     name: 'git',
+        //     message: 'Use Husky and Commit lint for commit linting? (recommended)',
+        //     initial: true,
+        // },
+        // {
+        //     type: 'confirm',
+        //     name: 'husky',
+        //     message: 'Initialize Git repository?',
+        //     initial: false,
+        // },
     ]);
 }
