@@ -1,0 +1,10 @@
+{
+    "name": "elysia-app",
+    "type": "module",
+    "scripts": {
+        "dev": "bun run index.ts"
+    },
+    "dependencies": {
+        "elysia": "latest"
+    }
+}
