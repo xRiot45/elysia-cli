@@ -1,7 +1,10 @@
-import prompts from 'prompts';
+import enquirer from 'enquirer';
+const { prompt } = enquirer;
 
-export async function askOptions() {
-    return await prompts([
+import { Options } from '../types/prompts';
+
+export async function askOptions(): Promise<Options> {
+    const baseAnswers = await prompt<Options>([
         {
             type: 'confirm',
             name: 'prettier',
@@ -11,20 +14,41 @@ export async function askOptions() {
         {
             type: 'confirm',
             name: 'eslint',
-            message: 'Use Eslint for code linting? (recommended)',
+            message: 'Use ESLint for code linting? (recommended)',
             initial: true,
         },
-        // {
-        //     type: 'confirm',
-        //     name: 'git',
-        //     message: 'Use Husky and Commit lint for commit linting? (recommended)',
-        //     initial: true,
-        // },
-        // {
-        //     type: 'confirm',
-        //     name: 'husky',
-        //     message: 'Initialize Git repository?',
-        //     initial: false,
-        // },
+        {
+            type: 'confirm',
+            name: 'git',
+            message: 'Initialize Git repository?',
+            initial: true,
+        },
+        // Tambahkan kembali husky jika perlu
     ]);
+
+    let gitRepositoryUrl: string | undefined;
+
+    if (baseAnswers.git) {
+        const repoAnswer = await prompt<{ gitRepositoryUrl: string }>([
+            {
+                type: 'input',
+                name: 'gitRepositoryUrl',
+                message: 'Enter GitHub repository URL: ',
+                validate: (input: string) =>
+                    /^https:\/\/github\.com\/.+\/.+\.git$/.test(input) ? true : 'Enter a valid GitHub repository URL!',
+            },
+        ]);
+        gitRepositoryUrl = repoAnswer.gitRepositoryUrl;
+        if (gitRepositoryUrl.startsWith('https://')) {
+            console.log(
+                '\n⚠️ Note: For HTTPS URLs, use your Personal Access Token (PAT) as the password when Git asks for authentication.\n' +
+                    'Learn more: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token',
+            );
+        }
+    }
+
+    return {
+        ...baseAnswers,
+        gitRepositoryUrl,
+    };
 }

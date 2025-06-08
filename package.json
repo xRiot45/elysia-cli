@@ -10,7 +10,8 @@
         "build": "bun build bin/index.ts --outdir dist"
     },
     "dependencies": {
-        "elysia": "latest"
+        "elysia": "latest",
+        "enquirer": "^2.4.1"
     },
     "devDependencies": {
         "bun-types": "latest",

@@ -19,6 +19,4 @@ export default defineConfig([
 `.trimStart();
 
     await writeFile(join(projectPath, 'eslint.config.mjs'), eslintConfigContent);
-
-    console.log('✅ ESLint configured successfully.');
 }

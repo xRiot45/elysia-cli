@@ -1,17 +1,22 @@
+import enquirer from 'enquirer';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { folders } from '../constants/folders';
 import { setupEslint } from '../libs/setupEslint';
+import { setupGit } from '../libs/setupGit';
 import { setupPrettier } from '../libs/setupPrettier';
+import { Options } from '../types/prompts';
 import { askOptions } from '../utils/prompts';
 import { runCommand } from '../utils/runCommand';
+
+const { prompt } = enquirer;
 
 export async function newProject(name: string) {
     const projectPath = join(process.cwd(), name);
 
     await runCommand(['bun', 'create', 'elysia', name], process.cwd());
 
-    const options = await askOptions();
+    const options: Options = await askOptions();
 
     for (const folder of folders) {
         await mkdir(join(projectPath, 'src', folder), { recursive: true });
@@ -29,26 +34,49 @@ export async function newProject(name: string) {
 
     // Initialize Git
     if (options.git) {
-        await runCommand(['git', 'init'], projectPath);
-        await runCommand(['git', 'add', '.'], projectPath);
-        await runCommand(['git', 'commit', '-m', `feat: setup project ${name}`], projectPath);
+        setupGit(projectPath, {
+            gitRepositoryUrl: options.gitRepositoryUrl,
+        });
+
+        if (options.gitRepositoryUrl) {
+            const { doPush } = await prompt<{ doPush: boolean }>([
+                {
+                    type: 'confirm',
+                    name: 'doPush',
+                    message: 'Do you want to push the project to the remote repository?',
+                    initial: true,
+                },
+            ]);
+
+            if (options.gitRepositoryUrl?.startsWith('https://')) {
+                console.log(
+                    '\n⚠️ Reminder: If you are using HTTPS, GitHub requires a Personal Access Token (PAT) as the password, not your GitHub account password.\n' +
+                        'You can generate a PAT here: https://github.com/settings/tokens',
+                );
+            }
+
+            if (doPush) {
+                await runCommand(['git', 'push', '-u', 'origin', 'main'], projectPath);
+                console.log('🚀 Project pushed to GitHub successfully!');
+            }
+        }
     }
 
     // Setup Husky & Commitlint
-    if (options.husky) {
-        await runCommand(
-            ['bun', 'add', '-D', 'husky', '@commitlint/cli', '@commitlint/config-conventional'],
-            projectPath,
-        );
-        await runCommand(['bunx', 'husky', 'install'], projectPath);
+    // if (options.husky) {
+    //     await runCommand(
+    //         ['bun', 'add', '-D', 'husky', '@commitlint/cli', '@commitlint/config-conventional'],
+    //         projectPath,
+    //     );
+    //     await runCommand(['bunx', 'husky', 'install'], projectPath);
 
-        await writeFile(
-            join(projectPath, 'commitlint.config.js'),
-            'module.exports = { extends: ["@commitlint/config-conventional"] };',
-        );
+    //     await writeFile(
+    //         join(projectPath, 'commitlint.config.js'),
+    //         'module.exports = { extends: ["@commitlint/config-conventional"] };',
+    //     );
 
-        await runCommand(['bunx', 'husky', 'add', '.husky/commit-msg', 'bunx commitlint --edit $1'], projectPath);
-    }
+    //     await runCommand(['bunx', 'husky', 'add', '.husky/commit-msg', 'bunx commitlint --edit $1'], projectPath);
+    // }
 
     // Update package.json name
     const pkgPath = join(projectPath, 'package.json');
