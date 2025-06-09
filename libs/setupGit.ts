@@ -8,6 +8,5 @@ export async function setupGit(projectPath: string, options: { gitRepositoryUrl?
 
     if (options.gitRepositoryUrl) {
         await runCommand(['git', 'remote', 'add', 'origin', options.gitRepositoryUrl], projectPath);
-
     }
 }
