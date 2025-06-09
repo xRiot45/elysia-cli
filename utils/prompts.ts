@@ -26,15 +26,9 @@ export async function askOptions(): Promise<Options> {
         {
             type: 'confirm',
             name: 'husky',
-            message: 'Enable Husky for Git hooks automation?',
+            message: 'Enable Husky for Git hooks automation & commit lint for conventional commits?',
             initial: true,
         },
-        // {
-        //     type: 'confirm',
-        //     name: 'commitLint',
-        //     message: 'Enable Commit Lint to enforce commit message conventions?',
-        //     initial: true,
-        // },
     ]);
 
     let gitRepositoryUrl: string | undefined;

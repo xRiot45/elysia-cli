@@ -68,16 +68,6 @@ export async function newProject(name: string) {
         await setupHusky(projectPath);
     }
 
-    // Setup Commitlint
-    // if (options.commitLint) {
-    //     await writeFile(
-    //         join(projectPath, 'commitlint.config.js'),
-    //         'module.exports = { extends: ["@commitlint/config-conventional"] };',
-    //     );
-
-    //     await runCommand(['bunx', 'husky', 'add', '.husky/commit-msg', 'bunx commitlint --edit $1'], projectPath);
-    // }
-
     // Update package.json
     const pkgPath = join(projectPath, 'package.json');
     const pkgJson = JSON.parse(await readFile(pkgPath, 'utf-8'));

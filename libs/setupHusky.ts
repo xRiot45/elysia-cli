@@ -3,7 +3,7 @@ import path from 'path';
 import { runCommand } from '../utils/runCommand';
 
 export async function setupHusky(projectPath: string) {
-    await runCommand(['bun', 'add', '-D', 'husky'], projectPath);
+    await runCommand(['bun', 'add', '-D', 'husky', '@commitlint/cli', '@commitlint/config-conventional'], projectPath);
     await runCommand(['bunx', 'husky', 'init'], projectPath);
     const preCommitPath = path.join(projectPath, '.husky/pre-commit');
     await writeFile(
@@ -26,4 +26,9 @@ bunx commitlint --edit "$1"
 `,
     );
     await chmod(commitMsgPath, 0o755);
+
+    await writeFile(
+        path.join(projectPath, 'commitlint.config.js'),
+        `export default { extends: ['@commitlint/config-conventional']};`,
+    );
 }
