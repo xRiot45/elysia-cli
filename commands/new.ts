@@ -71,14 +71,15 @@ export async function newProject(name: string) {
     const pkgPath = join(projectPath, 'package.json');
     const pkgJson = JSON.parse(await readFile(pkgPath, 'utf-8'));
     pkgJson.name = name;
+    pkgJson.type = 'module';
 
     pkgJson.scripts = {
         ...pkgJson.scripts,
         test: 'echo "Error: no test specified" && exit 1',
         dev: 'bun run --watch src/index.ts',
         build: 'bun build src/index.ts --outdir dist',
-        format: 'prettier --write src/**/*.{ts}',
-        lint: 'eslint src/**/*.{ts}',
+        format: 'prettier --write "**/*.ts"',
+        lint: 'eslint "**/*.ts" --fix',
     };
 
     await writeFile(pkgPath, JSON.stringify(pkgJson, null, 2));
