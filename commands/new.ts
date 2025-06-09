@@ -4,6 +4,7 @@ import { join } from 'path';
 import { folders } from '../constants/folders';
 import { setupEslint } from '../libs/setupEslint';
 import { setupGit } from '../libs/setupGit';
+import { setupHusky } from '../libs/setupHusky';
 import { setupPrettier } from '../libs/setupPrettier';
 import { Options } from '../types/prompts';
 import { askOptions } from '../utils/prompts';
@@ -62,14 +63,13 @@ export async function newProject(name: string) {
         }
     }
 
-    // Setup Husky & Commitlint
-    // if (options.husky) {
-    //     await runCommand(
-    //         ['bun', 'add', '-D', 'husky', '@commitlint/cli', '@commitlint/config-conventional'],
-    //         projectPath,
-    //     );
-    //     await runCommand(['bunx', 'husky', 'install'], projectPath);
+    // Setup Husky
+    if (options.husky) {
+        await setupHusky(projectPath);
+    }
 
+    // Setup Commitlint
+    // if (options.commitLint) {
     //     await writeFile(
     //         join(projectPath, 'commitlint.config.js'),
     //         'module.exports = { extends: ["@commitlint/config-conventional"] };',
@@ -78,10 +78,20 @@ export async function newProject(name: string) {
     //     await runCommand(['bunx', 'husky', 'add', '.husky/commit-msg', 'bunx commitlint --edit $1'], projectPath);
     // }
 
-    // Update package.json name
+    // Update package.json
     const pkgPath = join(projectPath, 'package.json');
     const pkgJson = JSON.parse(await readFile(pkgPath, 'utf-8'));
     pkgJson.name = name;
+
+    pkgJson.scripts = {
+        ...pkgJson.scripts,
+        test: 'echo "Error: no test specified" && exit 1',
+        dev: 'bun run --watch src/index.ts',
+        build: 'bun build src/index.ts --outdir dist',
+        format: 'prettier --write src/**/*.{ts}',
+        lint: 'eslint src/**/*.{ts}',
+    };
+
     await writeFile(pkgPath, JSON.stringify(pkgJson, null, 2));
 
     console.log(`✅ Project "${name}" created successfully.`);

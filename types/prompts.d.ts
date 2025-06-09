@@ -6,4 +6,5 @@ export interface Options {
     git: boolean;
     gitRepositoryUrl?: string;
     husky?: boolean;
+    commitLint?: boolean;
 }

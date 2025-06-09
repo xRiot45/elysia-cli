@@ -23,7 +23,18 @@ export async function askOptions(): Promise<Options> {
             message: 'Initialize Git repository?',
             initial: true,
         },
-        // Tambahkan kembali husky jika perlu
+        {
+            type: 'confirm',
+            name: 'husky',
+            message: 'Enable Husky for Git hooks automation?',
+            initial: true,
+        },
+        // {
+        //     type: 'confirm',
+        //     name: 'commitLint',
+        //     message: 'Enable Commit Lint to enforce commit message conventions?',
+        //     initial: true,
+        // },
     ]);
 
     let gitRepositoryUrl: string | undefined;
