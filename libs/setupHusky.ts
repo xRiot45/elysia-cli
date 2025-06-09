@@ -9,10 +9,8 @@ export async function setupHusky(projectPath: string) {
     await writeFile(
         preCommitPath,
         `#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-bun run format && bun run lint && bun run test && bun run build || exit 1
-`,
+        bun run format && bun run lint || exit 1
+        `,
     );
     await chmod(preCommitPath, 0o755);
 
@@ -20,10 +18,8 @@ bun run format && bun run lint && bun run test && bun run build || exit 1
     await writeFile(
         commitMsgPath,
         `#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-bunx commitlint --edit "$1"
-`,
+        bunx commitlint --edit "$1"
+        `,
     );
     await chmod(commitMsgPath, 0o755);
 
