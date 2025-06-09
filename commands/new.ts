@@ -10,9 +10,8 @@ import { Options } from '../types/prompts';
 import { askOptions } from '../utils/prompts';
 import { runCommand } from '../utils/runCommand';
 
-const { prompt } = enquirer;
-
 export async function newProject(name: string) {
+    const { prompt } = enquirer;
     const projectPath = join(process.cwd(), name);
 
     await runCommand(['bun', 'create', 'elysia', name], process.cwd());

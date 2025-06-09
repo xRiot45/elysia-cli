@@ -1,9 +1,8 @@
 import enquirer from 'enquirer';
-const { prompt } = enquirer;
-
 import { Options } from '../types/prompts';
 
 export async function askOptions(): Promise<Options> {
+    const { prompt } = enquirer;
     const baseAnswers = await prompt<Options>([
         {
             type: 'confirm',
