@@ -6,6 +6,7 @@ import { setupEslint } from '../libs/setupEslint';
 import { setupGit } from '../libs/setupGit';
 import { setupHusky } from '../libs/setupHusky';
 import { setupPrettier } from '../libs/setupPrettier';
+import { envTemplate } from '../templates/env/env-template';
 import { Options } from '../types/prompts';
 import { askOptions } from '../utils/prompts';
 import { runCommand } from '../utils/runCommand';
@@ -66,6 +67,9 @@ export async function newProject(name: string) {
     if (options.husky) {
         await setupHusky(projectPath);
     }
+
+    // Setup .env file
+    await writeFile(join(projectPath, '.env'), envTemplate);
 
     // Update package.json
     const pkgPath = join(projectPath, 'package.json');
