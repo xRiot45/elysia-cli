@@ -20,7 +20,13 @@ export async function newProject(name: string) {
     const options: Options = await askOptions();
 
     for (const folder of folders) {
+        const basePath = join(projectPath, 'src', folder);
         await mkdir(join(projectPath, 'src', folder), { recursive: true });
+
+        if (folder === 'database') {
+            await mkdir(join(basePath, 'models'), { recursive: true });
+            await mkdir(join(basePath, 'seeders'), { recursive: true });
+        }
     }
 
     // Setup Prettier

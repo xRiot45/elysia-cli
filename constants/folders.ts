@@ -3,7 +3,7 @@ export const folders = [
     'controllers',
     'interfaces',
     'middlewares',
-    'models',
+    'database',
     'repositories',
     'routes',
     'services',
