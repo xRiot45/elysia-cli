@@ -27,4 +27,6 @@ export async function setupHusky(projectPath: string) {
         path.join(projectPath, 'commitlint.config.js'),
         `export default { extends: ['@commitlint/config-conventional']};`,
     );
+
+    console.log('✅ Husky & Commitlint installed and hooks created');
 }

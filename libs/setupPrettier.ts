@@ -19,4 +19,6 @@ export async function setupPrettier(projectPath: string) {
     );
 
     await runCommand(['bun', 'add', '-D', 'prettier'], projectPath);
+
+    console.log('✅ Prettier installed and .prettierrc created');
 }

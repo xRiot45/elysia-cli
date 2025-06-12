@@ -35,4 +35,6 @@ export default defineConfig({
         generate: 'drizzle-kit generate',
     };
     await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+    console.log('✅ drizzle-orm installed and drizzle.config.ts created');
 }
