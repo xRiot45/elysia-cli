@@ -1,5 +1,6 @@
 export const folders = [
     'configs',
+    'enums',
     'controllers',
     'interfaces',
     'middlewares',
