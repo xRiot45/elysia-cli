@@ -2,6 +2,8 @@ import enquirer from 'enquirer';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { folders } from '../constants/folders';
+import { setupDrizzleOrm } from '../libs/orm/setupDrizzleOrm';
+import { setupDatabase } from '../libs/setupDatabase';
 import { setupEslint } from '../libs/setupEslint';
 import { setupGit } from '../libs/setupGit';
 import { setupHusky } from '../libs/setupHusky';
@@ -72,6 +74,16 @@ export async function newProject(name: string) {
     // Setup Husky
     if (options.husky) {
         await setupHusky(projectPath);
+    }
+
+    // Setup Database
+    if (options.database === 'mysql') {
+        await setupDatabase(projectPath, options.database);
+    }
+
+    // Setup Orm
+    if (options.orm === 'drizzle') {
+        await setupDrizzleOrm(projectPath, options.database);
     }
 
     // Setup .env file

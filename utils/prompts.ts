@@ -28,6 +28,20 @@ export async function askOptions(): Promise<Options> {
             message: 'Enable Husky for Git hooks automation & commit lint for conventional commits?',
             initial: true,
         },
+        {
+            type: 'select',
+            name: 'database',
+            message: 'Choose a database:',
+            choices: [{ name: 'mysql', message: 'MySQL' }],
+            initial: 0,
+        },
+        {
+            type: 'select',
+            name: 'orm',
+            message: 'Choose an ORM:',
+            choices: [{ name: 'drizzle', message: 'Drizzle ORM' }],
+            initial: 0,
+        },
     ]);
 
     let gitRepositoryUrl: string | undefined;
