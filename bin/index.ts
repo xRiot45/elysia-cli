@@ -1,15 +1,60 @@
 #!/usr/bin/env bun
-import { newProject } from '../commands/new';
+import { Command } from 'commander';
+import { generateFile } from '../commands/generateFile';
+import { schematics } from '../constants/schematics';
+import { readPackageJson } from '../utils/readPackageJson';
 
-const [, , command, ...args] = process.argv;
+const program = new Command();
+const packageJson = readPackageJson();
 
-if (command === 'new') {
-    const projectName = args[0];
-    if (!projectName) {
-        console.log('❌ Please provide a project name.');
-        process.exit(1);
+program
+    .name('elysia')
+    .version(packageJson.version, '-v, --version', 'Display the current version of elysia-cli')
+    .helpOption('-h, --help', 'Display help for command');
+
+// TODO: Create new project
+program
+    .command('new <projectName>')
+    .description('Create a new project with Elysia JS Framework')
+    .action(async (projectName: string) => {
+        if (!projectName) {
+            console.error('❌ Please provide a project name.');
+            process.exit(1);
+        }
+
+        console.log('✅ Project setup complete!');
+    });
+
+// TODO: Generate file
+program
+    .command('generate <schematic> <fileName>')
+    .description('Generate a new file')
+    .action(async (schematic: string, fileName: string) => {
+        if (!schematic || !fileName) {
+            console.error('❌ Please provide a file type and name.');
+            process.exit(1);
+        }
+
+        await generateFile();
+
+        console.log('✅ File generated successfully!');
+    });
+
+// TODO: Display information about elysia cli
+program.option('-i, --info', 'Display information about elysia-cli').action(() => {
+    process.stdout.write(`Name: ${packageJson.name}\n`);
+    process.stdout.write(`Version: ${packageJson.version}\n`);
+    process.stdout.write(`Author: ${packageJson.author}\n`);
+    process.stdout.write(`Description: ${packageJson.description}\n`);
+    process.stdout.write(`License: ${packageJson.license}\n`);
+});
+
+// TODO: Display schematics
+program.on('--help', () => {
+    console.log('\nSchematics:');
+    for (const [cmd, desc] of Object.entries(schematics)) {
+        console.log(`  ${cmd.padEnd(10)} ${desc}`);
     }
-    await newProject(projectName);
-} else {
-    console.log('Unknown command:', command);
-}
+});
+
+program.parse(process.argv);

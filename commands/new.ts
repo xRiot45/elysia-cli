@@ -27,7 +27,6 @@ export async function newProject(name: string) {
 
         if (folder === 'database') {
             await mkdir(join(basePath, 'models'), { recursive: true });
-            await mkdir(join(basePath, 'seeders'), { recursive: true });
         }
     }
 
