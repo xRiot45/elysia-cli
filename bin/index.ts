@@ -7,6 +7,7 @@ import { readPackageJson } from '../utils/readPackageJson';
 const program = new Command();
 const packageJson = readPackageJson();
 
+// TODO: Display version and help
 program
     .name('elysia')
     .version(packageJson.version, '-v, --version', 'Display the current version of elysia-cli')
@@ -53,7 +54,7 @@ program.option('-i, --info', 'Display information about elysia-cli').action(() =
 program.on('--help', () => {
     console.log('\nSchematics:');
     for (const [cmd, desc] of Object.entries(schematics)) {
-        console.log(`  ${cmd.padEnd(10)} ${desc}`);
+        console.log(`  ${cmd.padEnd(10)} \t\t${desc}`);
     }
 });
 
