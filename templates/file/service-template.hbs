@@ -1,80 +1,26 @@
-import { {{pascalCase name}}, {{pascalCase name}}Form } from '../interfaces/{{kebabCase name}}.interface';
-import * as {{camelCase name}}Repository from '../repositories/{{kebabCase name}}.repository';
 import { ApiResponse } from '../types';
 
-export const findAll{{pascalCase name}}sService = async (): Promise<ApiResponse<{{pascalCase name}}[]>> => {
-    try {
-        const items = await {{camelCase name}}Repository.findAll{{pascalCase name}}s();
-        return {
-            status: true,
-            data: items,
-        };
-    } catch (error) {
-        return {
-            status: false,
-            message: 'Failed to fetch {{camelCase name}}s',
-            error: error as string,
-        };
-    }
+export const findAllService = async (): Promise<ApiResponse<any>> => {
+    // TODO: Implement find all logic
+    return {} as ApiResponse<any>;
 };
 
-export const create{{pascalCase name}}Service = async (request: {{pascalCase name}}Form): Promise<ApiResponse<{{pascalCase name}} | null>> => {
-    try {
-        const { title, content } = request;
-        const result = await {{camelCase name}}Repository.create{{pascalCase name}}(title, content);
-        return {
-            status: true,
-            data: result,
-        };
-    } catch (error) {
-        return {
-            status: false,
-            error: error as string,
-        };
-    }
+export const createService = async (request: any): Promise<ApiResponse<any>> => {
+    // TODO: Implement create logic
+    return {} as ApiResponse<any>;
 };
 
-export const find{{pascalCase name}}ByIdService = async (id: number): Promise<ApiResponse<{{pascalCase name}} | null>> => {
-    try {
-        const result = await {{camelCase name}}Repository.find{{pascalCase name}}ById(id);
-        return {
-            status: true,
-            data: result,
-        };
-    } catch (error) {
-        return {
-            status: false,
-            error: error as string,
-        };
-    }
+export const findByIdService = async (id: number): Promise<ApiResponse<any>> => {
+    // TODO: Implement find by ID logic
+    return {} as ApiResponse<any>;
 };
 
-export const update{{pascalCase name}}Service = async (id: number, request: {{pascalCase name}}Form): Promise<ApiResponse<{{pascalCase name}} | null>> => {
-    try {
-        const { title, content } = request;
-        const result = await {{camelCase name}}Repository.update{{pascalCase name}}(id, title, content);
-        return {
-            status: true,
-            data: result,
-        };
-    } catch (error) {
-        return {
-            status: false,
-            error: error as string,
-        };
-    }
+export const updateService = async (id: number, request: any): Promise<ApiResponse<any>> => {
+    // TODO: Implement update logic
+    return {} as ApiResponse<any>;
 };
 
-export const delete{{pascalCase name}}Service = async (id: number): Promise<ApiResponse<void>> => {
-    try {
-        await {{camelCase name}}Repository.delete{{pascalCase name}}(id);
-        return {
-            status: true,
-        };
-    } catch (error) {
-        return {
-            status: false,
-            error: error as string,
-        };
-    }
+export const deleteService = async (id: number): Promise<ApiResponse<any>> => {
+    // TODO: Implement delete logic
+    return {} as ApiResponse<any>;
 };

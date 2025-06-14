@@ -1,5 +1,6 @@
 #!/usr/bin/env bun
 import { Command } from 'commander';
+import { generateFile } from '../commands/generateFile';
 import { newProject } from '../commands/new';
 import { schematics } from '../constants/schematics';
 import { readPackageJson } from '../utils/readPackageJson';
@@ -38,7 +39,7 @@ program
             process.exit(1);
         }
 
-        // await generateFile();
+        await generateFile(schematic, fileName);
 
         console.log('✅ File generated successfully!');
     });

@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { compile } from 'handlebars';
 import path from 'path';
 import { schematics } from '../constants/schematics';
 
@@ -35,7 +36,7 @@ export async function generateFile(schematic: string, fileName: string) {
     }
 
     const folder = folderMap[schematic] ?? schematic;
-    const targetDir = path.join(process.cwd(), folder);
+    const targetDir = path.join(process.cwd(), 'src', folder);
     const fileExtension = schematic === 'types' ? '.d.ts' : '.ts';
     const filePath = path.join(targetDir, `${fileName}.${schematic}.${fileExtension}`);
 
@@ -47,4 +48,17 @@ export async function generateFile(schematic: string, fileName: string) {
 
     // TODO: Create folder if it doesn't exist
     fs.mkdirSync(targetDir, { recursive: true });
+
+    const templatePath = path.join(__dirname, `../templates/file/${schematic}-template.hbs`);
+    if (!fs.existsSync(templatePath)) {
+        console.error(`❌ Template not found: ${templatePath}`);
+        process.exit(1);
+    }
+
+    const templateSource = fs.readFileSync(templatePath, 'utf8');
+    const template = compile(templateSource);
+    const content = template({ fileName });
+    fs.writeFileSync(filePath, content, 'utf-8');
+
+    console.log(`✅ File generated: ${filePath}`);
 }
