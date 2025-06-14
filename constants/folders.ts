@@ -4,7 +4,7 @@ export const folders = [
     'controllers',
     'interfaces',
     'middlewares',
-    'database',
+    'databases',
     'repositories',
     'routes',
     'services',

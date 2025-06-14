@@ -1,5 +1,6 @@
 import enquirer from 'enquirer';
 import { mkdir, readFile, writeFile } from 'fs/promises';
+import Handlebars from 'handlebars';
 import { join } from 'path';
 import { folders } from '../constants/folders';
 import { setupDrizzleOrm } from '../libs/orm/setupDrizzleOrm';
@@ -30,17 +31,25 @@ export async function newProject(name: string) {
         }
     }
 
-    // Setup Prettier
+    // TODO: Create default index.d.ts file
+    const typesPath = join(projectPath, 'src', 'types', 'index.d.ts');
+    const templateTypes = join(__dirname, '../templates/file/types-template.hbs');
+    const templateSource = await readFile(templateTypes, 'utf8');
+    const template = Handlebars.compile(templateSource);
+    const typesContent = template({});
+    await writeFile(typesPath, typesContent);
+
+    // TODO: Setup Prettier
     if (options.prettier) {
         await setupPrettier(projectPath);
     }
 
-    // Setup EsLint
+    // TODO: Setup EsLint
     if (options.eslint) {
         await setupEslint(projectPath);
     }
 
-    // Initialize Git
+    // TODO: Initialize Git
     if (options.git) {
         setupGit(projectPath, {
             gitRepositoryUrl: options.gitRepositoryUrl,
@@ -70,25 +79,25 @@ export async function newProject(name: string) {
         }
     }
 
-    // Setup Husky
+    // TODO: Setup Husky
     if (options.husky) {
         await setupHusky(projectPath);
     }
 
-    // Setup Database
+    // TODO: Setup Database
     if (options.database === 'mysql') {
         await setupDatabase(projectPath, options.database);
     }
 
-    // Setup Orm
+    // TODO: Setup Orm
     if (options.orm === 'drizzle') {
         await setupDrizzleOrm(projectPath, options.database);
     }
 
-    // Setup .env file
+    // TODO: Setup .env file
     await writeFile(join(projectPath, '.env'), envTemplate);
 
-    // Update package.json
+    // TODO: Update package.json
     const pkgPath = join(projectPath, 'package.json');
     const pkgJson = JSON.parse(await readFile(pkgPath, 'utf-8'));
     pkgJson.name = name;
