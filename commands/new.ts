@@ -1,4 +1,5 @@
 import enquirer from 'enquirer';
+import fs from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import Handlebars from 'handlebars';
 import { join } from 'path';
@@ -11,15 +12,30 @@ import { setupHusky } from '../libs/setupHusky';
 import { setupPrettier } from '../libs/setupPrettier';
 import { envTemplate } from '../templates/env/env-template';
 import { Options } from '../types/prompts';
-import { logSuccess } from '../utils/logger';
+import { logError, logSuccess } from '../utils/logger';
 import { askOptions } from '../utils/prompts';
 import { runCommand } from '../utils/runCommand';
+import { withSpinner } from '../utils/spinner';
 
 export async function newProject(name: string) {
     const { prompt } = enquirer;
     const projectPath = join(process.cwd(), name);
 
-    await runCommand(['bun', 'create', 'elysia', name], process.cwd());
+    if (fs.existsSync(projectPath)) {
+        logError(`Project "${name}" already exists at path "${projectPath}".\n`);
+        return;
+    }
+
+    await withSpinner(
+        {
+            text: `Creating Elysia project "${name}"...`,
+            successText: `Elysia project "${name}" created!`,
+            failText: `Failed to create Elysia project "${name}".`,
+        },
+        async () => {
+            await runCommand(['bun', 'create', 'elysia', name], process.cwd());
+        },
+    );
 
     const options: Options = await askOptions();
 
@@ -74,8 +90,18 @@ export async function newProject(name: string) {
             }
 
             if (doPush) {
-                await runCommand(['git', 'push', '-u', 'origin', 'main'], projectPath);
-                logSuccess('Project pushed to GitHub successfully!');
+                await withSpinner(
+                    {
+                        text: 'Pushing project to GitHub...',
+                        successText: 'Project pushed to GitHub successfully!',
+                        failText: 'Failed to push project to GitHub.',
+                    },
+                    async () => {
+                        await runCommand(['git', 'push', '-u', 'origin', 'main'], projectPath);
+                    },
+                );
+
+                logSuccess('GitHub push completed');
             }
         }
     }

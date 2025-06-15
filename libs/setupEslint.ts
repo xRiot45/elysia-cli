@@ -1,10 +1,19 @@
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
-import { logSuccess } from '../utils/logger';
 import { runCommand } from '../utils/runCommand';
+import { withSpinner } from '../utils/spinner';
 
 export async function setupEslint(projectPath: string) {
-    await runCommand(['bun', 'add', '-D', 'eslint', '@eslint/js', 'globals', 'typescript-eslint'], projectPath);
+    await withSpinner(
+        {
+            text: 'Installing ESLint packages...',
+            successText: 'ESLint packages installed successfully!',
+            failText: 'Failed to install ESLint packages.',
+        },
+        async () => {
+            await runCommand(['bun', 'add', '-D', 'eslint', '@eslint/js', 'globals', 'typescript-eslint'], projectPath);
+        },
+    );
 
     const eslintConfigContent = `
 import js from "@eslint/js";
@@ -20,6 +29,4 @@ export default defineConfig([
 `.trimStart();
 
     await writeFile(join(projectPath, 'eslint.config.mjs'), eslintConfigContent);
-
-    logSuccess('ESLint configured');
 }

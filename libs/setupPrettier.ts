@@ -1,9 +1,10 @@
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
-import { logSuccess } from '../utils/logger';
 import { runCommand } from '../utils/runCommand';
+import { withSpinner } from '../utils/spinner';
 
 export async function setupPrettier(projectPath: string) {
+    // Step 1: Create Prettier config file
     await writeFile(
         join(projectPath, '.prettierrc'),
         JSON.stringify(
@@ -19,7 +20,17 @@ export async function setupPrettier(projectPath: string) {
         ),
     );
 
-    await runCommand(['bun', 'add', '-D', 'prettier'], projectPath);
+    // Step 2: Install Prettier with spinner
+    await withSpinner(
+        {
+            text: 'Installing Prettier...',
+            successText: 'Prettier installed!',
+            failText: 'Failed to install Prettier.',
+        },
+        async () => {
+            await runCommand(['bun', 'add', '-D', 'prettier'], projectPath);
+        },
+    );
 
-    logSuccess('Prettier configured');
+    // logSuccess('Prettier configured');
 }

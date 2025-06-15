@@ -1,11 +1,20 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { logSuccess } from '../utils/logger';
 import { runCommand } from '../utils/runCommand';
+import { withSpinner } from '../utils/spinner';
 
 export async function setupDatabase(projectPath: string, database: string) {
     if (database === 'mysql') {
-        await runCommand(['bun', 'add', 'mysql2'], projectPath);
+        await withSpinner(
+            {
+                text: 'Installing mysql2 package...',
+                successText: 'mysql2 package installed successfully!',
+                failText: 'Failed to install mysql2 package.',
+            },
+            async () => {
+                await runCommand(['bun', 'add', 'mysql2'], projectPath);
+            },
+        );
 
         const configContent = `
 import { drizzle } from 'drizzle-orm/mysql2';
@@ -28,7 +37,5 @@ export const db = await connectDatabase();
 
         const configPath = path.join(projectPath, 'src/configs/database.config.ts');
         await fs.writeFile(configPath, configContent, 'utf8');
-
-        logSuccess('Database configured');
     }
 }

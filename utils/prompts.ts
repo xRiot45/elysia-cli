@@ -18,12 +18,6 @@ export async function askOptions(): Promise<Options> {
         },
         {
             type: 'confirm',
-            name: 'git',
-            message: 'Initialize Git repository?',
-            initial: true,
-        },
-        {
-            type: 'confirm',
             name: 'husky',
             message: 'Enable Husky for Git hooks automation & commit lint for conventional commits?',
             initial: true,
@@ -41,6 +35,12 @@ export async function askOptions(): Promise<Options> {
             message: 'Choose an ORM:',
             choices: [{ name: 'drizzle', message: 'Drizzle ORM' }],
             initial: 0,
+        },
+        {
+            type: 'confirm',
+            name: 'git',
+            message: 'Initialize Git repository?',
+            initial: true,
         },
     ]);
 
