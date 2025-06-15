@@ -7,7 +7,7 @@ import {
   deleteController
 } from '../controllers/{{ fileName }}.controller';
 
-export const {{ fileName }}Routes = new Elysia({ prefix: '/{{ fileName }}' })
+export const {{ fileName }}Route = new Elysia({ prefix: '/{{ fileName }}' })
   .get('/', () => findAllController())
   .get('/:id', ({ params }) => findByIdController(Number(params.id)))
   .post('/', ({ body }) => createController(body))
