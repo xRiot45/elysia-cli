@@ -1,0 +1,8 @@
+import { Elysia } from 'elysia';
+{{#each routes}}
+import { {{this}} } from './{{routeName this}}.route';
+{{/each}}
+
+export const routes = new Elysia()
+{{#each routes}}    .use({{this}})
+{{/each}};
