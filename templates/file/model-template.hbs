@@ -1,0 +1,6 @@
+import { int, mysqlTable } from 'drizzle-orm/mysql-core';
+
+export const {{ fileName }}Model = mysqlTable('{{ fileName }}', {
+    id: int('id').primaryKey().autoincrement(),
+    // TODO: Add other fields here
+});
