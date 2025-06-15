@@ -1,0 +1,28 @@
+import { ApiResponse } from '../types';
+import {
+  findAllService,
+  createService,
+  findByIdService,
+  updateService,
+  deleteService
+} from '../services/{{fileName}}.service';
+
+export const findAllController = async (): Promise<ApiResponse<any>> => {
+  return await findAllService();
+};
+
+export const createController = async (body: any): Promise<ApiResponse<any>> => {
+  return await createService(body);
+};
+
+export const findByIdController = async (id: number): Promise<ApiResponse<any>> => {
+  return await findByIdService(id);
+};
+
+export const updateController = async (id: number, body: any): Promise<ApiResponse<any>> => {
+  return await updateService(id, body);
+};
+
+export const deleteController = async (id: number): Promise<ApiResponse<any>> => {
+  return await deleteService(id);
+};

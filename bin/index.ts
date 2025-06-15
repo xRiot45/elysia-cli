@@ -41,7 +41,7 @@ program
 
         await generateFile(schematic, fileName);
 
-        console.log('✅ File generated successfully!');
+        console.log(`✅ File ${schematic} ${fileName} generated successfully!`);
     });
 
 // TODO: Display information about elysia cli
