@@ -1,3 +1,4 @@
+import { logSuccess } from '../utils/logger';
 import { runCommand } from '../utils/runCommand';
 
 export async function setupGit(projectPath: string, options: { gitRepositoryUrl?: string }) {
@@ -10,5 +11,5 @@ export async function setupGit(projectPath: string, options: { gitRepositoryUrl?
         await runCommand(['git', 'remote', 'add', 'origin', options.gitRepositoryUrl], projectPath);
     }
 
-    console.log('✅ Git initialized');
+    logSuccess('Git configured');
 }

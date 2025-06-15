@@ -1,5 +1,6 @@
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
+import { logSuccess } from '../utils/logger';
 import { runCommand } from '../utils/runCommand';
 
 export async function setupEslint(projectPath: string) {
@@ -20,5 +21,5 @@ export default defineConfig([
 
     await writeFile(join(projectPath, 'eslint.config.mjs'), eslintConfigContent);
 
-    console.log('✅ ESLint installed and eslint.config.mjs created');
+    logSuccess('ESLint configured');
 }

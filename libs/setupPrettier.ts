@@ -1,5 +1,6 @@
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
+import { logSuccess } from '../utils/logger';
 import { runCommand } from '../utils/runCommand';
 
 export async function setupPrettier(projectPath: string) {
@@ -20,5 +21,5 @@ export async function setupPrettier(projectPath: string) {
 
     await runCommand(['bun', 'add', '-D', 'prettier'], projectPath);
 
-    console.log('✅ Prettier installed and .prettierrc created');
+    logSuccess('Prettier configured');
 }

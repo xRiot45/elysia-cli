@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { logSuccess } from '../utils/logger';
 import { runCommand } from '../utils/runCommand';
 
 export async function setupDatabase(projectPath: string, database: string) {
@@ -28,6 +29,6 @@ export const db = await connectDatabase();
         const configPath = path.join(projectPath, 'src/configs/database.config.ts');
         await fs.writeFile(configPath, configContent, 'utf8');
 
-        console.log('✅ mysql2 installed and database.config.ts created');
+        logSuccess('Database configured');
     }
 }

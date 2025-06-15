@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+import chalk from 'chalk';
 import { Command } from 'commander';
 import { generateFile } from '../commands/generateFile';
 import { newProject } from '../commands/new';
@@ -20,13 +21,13 @@ program
     .description('Create a new project with Elysia JS Framework')
     .action(async (projectName: string) => {
         if (!projectName) {
-            console.error('❌ Please provide a project name.');
+            chalk.red('❌ Please provide a project name.');
             process.exit(1);
         }
 
         await newProject(projectName);
 
-        console.log('✅ Project setup complete!');
+        chalk.green(`✅ Project created at: ${process.cwd()}/${projectName}`);
     });
 
 // TODO: Generate file
@@ -35,13 +36,13 @@ program
     .description('Generate a new file')
     .action(async (schematic: string, fileName: string) => {
         if (!schematic || !fileName) {
-            console.error('❌ Please provide a file type and name.');
+            chalk.red('❌ Please provide a file type and name.');
             process.exit(1);
         }
 
         await generateFile(schematic, fileName);
 
-        console.log(`✅ File ${schematic} ${fileName} generated successfully!`);
+        chalk.green(`✅ File ${schematic} ${fileName} generated successfully!`);
     });
 
 // TODO: Display information about elysia cli
@@ -55,9 +56,9 @@ program.option('-i, --info', 'Display information about elysia-cli').action(() =
 
 // TODO: Display schematics
 program.on('--help', () => {
-    console.log('\nSchematics:');
+    process.stdout.write('\nSchematics:');
     for (const [cmd, desc] of Object.entries(schematics)) {
-        console.log(`  ${cmd.padEnd(10)} \t\t${desc}`);
+        process.stdout.write(`  ${cmd.padEnd(10)} \t\t${desc}`);
     }
 });
 

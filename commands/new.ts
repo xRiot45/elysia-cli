@@ -11,6 +11,7 @@ import { setupHusky } from '../libs/setupHusky';
 import { setupPrettier } from '../libs/setupPrettier';
 import { envTemplate } from '../templates/env/env-template';
 import { Options } from '../types/prompts';
+import { logSuccess } from '../utils/logger';
 import { askOptions } from '../utils/prompts';
 import { runCommand } from '../utils/runCommand';
 
@@ -66,7 +67,7 @@ export async function newProject(name: string) {
             ]);
 
             if (options.gitRepositoryUrl?.startsWith('https://')) {
-                console.log(
+                process.stdout.write(
                     '\n⚠️ Reminder: If you are using HTTPS, GitHub requires a Personal Access Token (PAT) as the password, not your GitHub account password.\n' +
                         'You can generate a PAT here: https://github.com/settings/tokens',
                 );
@@ -74,7 +75,7 @@ export async function newProject(name: string) {
 
             if (doPush) {
                 await runCommand(['git', 'push', '-u', 'origin', 'main'], projectPath);
-                console.log('🚀 Project pushed to GitHub successfully!');
+                logSuccess('Project pushed to GitHub successfully!');
             }
         }
     }
@@ -122,5 +123,5 @@ export async function newProject(name: string) {
 
     await writeFile(pkgPath, JSON.stringify(pkgJson, null, 2));
 
-    console.log(`✅ Project "${name}" created successfully.`);
+    logSuccess(`Project "${name}" created successfully.\n`);
 }

@@ -58,7 +58,7 @@ export async function askOptions(): Promise<Options> {
         ]);
         gitRepositoryUrl = repoAnswer.gitRepositoryUrl;
         if (gitRepositoryUrl.startsWith('https://')) {
-            console.log(
+            process.stdout.write(
                 '\n⚠️ Note: For HTTPS URLs, use your Personal Access Token (PAT) as the password when Git asks for authentication.\n' +
                     'Learn more: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token',
             );

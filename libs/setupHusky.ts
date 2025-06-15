@@ -1,5 +1,6 @@
 import { chmod, writeFile } from 'fs/promises';
 import path from 'path';
+import { logSuccess } from '../utils/logger';
 import { runCommand } from '../utils/runCommand';
 
 export async function setupHusky(projectPath: string) {
@@ -28,5 +29,5 @@ export async function setupHusky(projectPath: string) {
         `export default { extends: ['@commitlint/config-conventional']};`,
     );
 
-    console.log('✅ Husky & Commitlint installed and hooks created');
+    logSuccess('Husky & Commitlint configured');
 }

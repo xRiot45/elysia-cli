@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { readFile, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { runCommand } from '../../utils/runCommand';
@@ -36,5 +37,5 @@ export default defineConfig({
     };
     await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-    console.log('✅ drizzle-orm installed and drizzle.config.ts created');
+    chalk.green('✅ drizzle-orm installed and drizzle.config.ts created');
 }
