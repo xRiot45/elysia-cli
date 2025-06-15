@@ -21,7 +21,6 @@ export const folderMap: Record<string, string> = {
     validation: 'validations',
     model: 'databases/models',
     interface: 'interfaces',
-    types: 'types',
     resources: 'resources',
     config: 'configs',
     middleware: 'middlewares',

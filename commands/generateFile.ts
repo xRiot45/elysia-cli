@@ -7,7 +7,7 @@ import { capitalize } from '../utils/capitalize';
 
 const schematicsMap = schematics as { [key: string]: string };
 
-const capitalizeFileNameSchematics = ['interface', 'enum'];
+const capitalizeFileNameSchematics = ['interface', 'enum', 'type'];
 
 function getTemplateContext(schematic: string, fileName: string) {
     const shouldCapitalize = capitalizeFileNameSchematics.includes(schematic);
@@ -35,8 +35,7 @@ export async function generateFile(schematic: string, fileName: string) {
     // TODO: Determine target directory
     const folder = folderMap[schematic] ?? schematic;
     const targetDir = path.join(process.cwd(), 'src', folder);
-    const fileExtension = schematic === 'types' ? 'd.ts' : 'ts';
-    const filePath = path.join(targetDir, `${fileName}.${schematic}.${fileExtension}`);
+    const filePath = path.join(targetDir, `${fileName}.${schematic}.ts`);
 
     // TODO: Prevent file overwriting
     if (fs.existsSync(filePath)) {

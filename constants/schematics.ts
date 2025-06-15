@@ -6,7 +6,6 @@ export const schematics = {
     validation: 'Generate a new validation file',
     model: 'Generate a new model file',
     interface: 'Generate a new interface file',
-    types: 'Generate a new types file',
     resources: 'Generate a new resources file (controller, service, route, repository, validation, model)',
     config: 'Generate a new config file',
     middleware: 'Generate a new middleware file',
