@@ -97,6 +97,14 @@ export async function newProject(name: string) {
     // TODO: Setup .env file
     await writeFile(join(projectPath, '.env'), envTemplate);
 
+    // TODO: Setup index.ts file
+    const indexPath = join(projectPath, 'src', 'index.ts');
+    const indexTemplatePath = join(__dirname, '../templates/file/index-template.hbs');
+    const indexTemplateSource = await readFile(indexTemplatePath, 'utf8');
+    const indexTemplate = Handlebars.compile(indexTemplateSource);
+    const indexContent = indexTemplate({});
+    await writeFile(indexPath, indexContent);
+
     // TODO: Update package.json
     const pkgPath = join(projectPath, 'package.json');
     const pkgJson = JSON.parse(await readFile(pkgPath, 'utf-8'));
