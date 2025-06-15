@@ -1,0 +1,27 @@
+import { eq } from 'drizzle-orm';
+import { db } from '../configs/database.config';
+
+export const findAll = async (): Promise<any> => {
+    // TODO: Implement find all logic
+    return db.select().from({});
+};
+
+export const createTodo = async (body: any): Promise<any> => {
+    // TODO: Implement create logic
+    return db.insert({}).into({});
+};
+
+export const findTodoById = async (id: number): Promise<any> => {
+    // TODO: Implement find by ID logic
+    return db.select().from({}).where(eq({}, id));
+};
+
+export const updateTodo = async (id: number, body: any): Promise<any> => {
+    // TODO: Implement update logic
+    return db.update({}).where(eq({}, id));
+};
+
+export const deleteTodo = async (id: number): Promise<void> => {
+    // TODO: Implement delete logic
+    return db.delete().from({}).where(eq({}, id));
+};
