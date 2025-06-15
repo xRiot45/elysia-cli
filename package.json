@@ -19,7 +19,8 @@
         "commander": "^14.0.0",
         "elysia": "latest",
         "enquirer": "^2.4.1",
-        "handlebars": "^4.7.8"
+        "handlebars": "^4.7.8",
+        "ora": "^8.2.0"
     },
     "type": "module",
     "devDependencies": {
