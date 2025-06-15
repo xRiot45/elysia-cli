@@ -1,0 +1,15 @@
+import { Elysia } from 'elysia';
+import {
+  findAllController,
+  findByIdController,
+  createController,
+  updateController,
+  deleteController
+} from '../controllers/{{ fileName }}.controller';
+
+export const {{ fileName }}Routes = new Elysia({ prefix: '/{{ fileName }}' })
+  .get('/', () => findAllController())
+  .get('/:id', ({ params }) => findByIdController(Number(params.id)))
+  .post('/', ({ body }) => createController(body))
+  .put('/:id', ({ params, body }) => updateController(Number(params.id), body))
+  .delete('/:id', ({ params }) => deleteController(Number(params.id)));

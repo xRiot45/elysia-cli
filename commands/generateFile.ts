@@ -34,12 +34,14 @@ export async function generateFile(schematic: string, fileName: string) {
     // TODO: Create folder if it doesn't exist
     fs.mkdirSync(targetDir, { recursive: true });
 
+    // TODO: Check if template exists
     const templatePath = path.join(__dirname, `../templates/file/${schematic}-template.hbs`);
     if (!fs.existsSync(templatePath)) {
         console.error(`❌ Template not found: ${templatePath}`);
         process.exit(1);
     }
 
+    // TODO: Generate file
     const templateSource = fs.readFileSync(templatePath, 'utf8');
     const template = compile(templateSource);
     const content = template({ fileName });
