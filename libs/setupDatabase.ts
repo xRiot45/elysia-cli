@@ -8,11 +8,11 @@ export async function setupDatabase(projectPath: string, database: string) {
         await withSpinner(
             {
                 text: 'Installing mysql2 package...',
-                successText: 'mysql2 package installed successfully!',
+                successText: 'mysql2 installed successfully for MySQL database connection.',
                 failText: 'Failed to install mysql2 package.',
             },
             async () => {
-                await runCommand(['bun', 'add', 'mysql2'], projectPath);
+                await runCommand(['bun', 'add', 'mysql2'], projectPath, true);
             },
         );
 

@@ -8,13 +8,13 @@ export async function setupDrizzleOrm(projectPath: string, database: string) {
     await withSpinner(
         {
             text: 'Installing drizzle ORM packages...',
-            successText: 'drizzle-orm packages installed!',
+            successText: 'Drizzle ORM packages installed and ready to manage your database.',
             failText: 'Failed to install drizzle-orm packages.',
         },
         async () => {
-            await runCommand(['bun', 'add', 'drizzle-orm'], projectPath);
-            await runCommand(['bun', 'add', 'drizzle-typebox'], projectPath);
-            await runCommand(['bun', 'add', 'drizzle-kit'], projectPath);
+            await runCommand(['bun', 'add', 'drizzle-orm'], projectPath, true);
+            await runCommand(['bun', 'add', 'drizzle-typebox'], projectPath, true);
+            await runCommand(['bun', 'add', 'drizzle-kit'], projectPath, true);
         },
     );
 

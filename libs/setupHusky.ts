@@ -8,13 +8,14 @@ export async function setupHusky(projectPath: string) {
     await withSpinner(
         {
             text: 'Installing Husky and Commitlint...',
-            successText: 'Husky & Commitlint packages installed!',
+            successText: 'Husky & Commitlint installed to manage commit message standards.',
             failText: 'Failed to install Husky or Commitlint.',
         },
         async () => {
             await runCommand(
                 ['bun', 'add', '-D', 'husky', '@commitlint/cli', '@commitlint/config-conventional'],
                 projectPath,
+                true,
             );
         },
     );
@@ -23,11 +24,11 @@ export async function setupHusky(projectPath: string) {
     await withSpinner(
         {
             text: 'Initializing Husky...',
-            successText: 'Husky initialized!',
+            successText: 'Husky initialized to enable Git hooks.',
             failText: 'Failed to initialize Husky.',
         },
         async () => {
-            await runCommand(['bunx', 'husky', 'init'], projectPath);
+            await runCommand(['bunx', 'husky', 'init'], projectPath, true);
         },
     );
 
@@ -56,6 +57,4 @@ export async function setupHusky(projectPath: string) {
         path.join(projectPath, 'commitlint.config.js'),
         `export default { extends: ['@commitlint/config-conventional'] };`,
     );
-
-    // logSuccess('Husky & Commitlint configured');
 }

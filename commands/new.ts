@@ -1,7 +1,9 @@
+import chalk from 'chalk';
 import enquirer from 'enquirer';
 import fs from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import Handlebars from 'handlebars';
+import ora from 'ora';
 import { join } from 'path';
 import { folders } from '../constants/folders';
 import { setupDrizzleOrm } from '../libs/orm/setupDrizzleOrm';
@@ -12,6 +14,7 @@ import { setupHusky } from '../libs/setupHusky';
 import { setupPrettier } from '../libs/setupPrettier';
 import { envTemplate } from '../templates/env/env-template';
 import { Options } from '../types/prompts';
+import centerText from '../utils/centerText';
 import { logError, logSuccess } from '../utils/logger';
 import { askOptions } from '../utils/prompts';
 import { runCommand } from '../utils/runCommand';
@@ -20,24 +23,17 @@ import { withSpinner } from '../utils/spinner';
 export async function newProject(name: string) {
     const { prompt } = enquirer;
     const projectPath = join(process.cwd(), name);
+    const spinner = ora();
 
     if (fs.existsSync(projectPath)) {
         logError(`Project "${name}" already exists at path "${projectPath}".\n`);
         return;
     }
 
-    await withSpinner(
-        {
-            text: `Creating Elysia project "${name}"...`,
-            successText: `Elysia project "${name}" created!`,
-            failText: `Failed to create Elysia project "${name}".`,
-        },
-        async () => {
-            await runCommand(['bun', 'create', 'elysia', name], process.cwd());
-        },
-    );
+    await runCommand(['bun', 'create', 'elysia', name], process.cwd(), true);
 
     const options: Options = await askOptions();
+    process.stdout.write('\n');
 
     for (const folder of folders) {
         const basePath = join(projectPath, 'src', folder);
@@ -97,7 +93,7 @@ export async function newProject(name: string) {
                         failText: 'Failed to push project to GitHub.',
                     },
                     async () => {
-                        await runCommand(['git', 'push', '-u', 'origin', 'main'], projectPath);
+                        await runCommand(['git', 'push', '-u', 'origin', 'main'], projectPath, true);
                     },
                 );
 
@@ -149,5 +145,14 @@ export async function newProject(name: string) {
 
     await writeFile(pkgPath, JSON.stringify(pkgJson, null, 2));
 
-    logSuccess(`Project "${name}" created successfully.\n`);
+    process.stdout.write('\n');
+    spinner.succeed(chalk.green(`Project ${name} created! 🎉 `));
+    process.stdout.write(`\nNext steps:\n`);
+    process.stdout.write(chalk.cyan(`\n$ cd ${name}`));
+    process.stdout.write(chalk.cyan(`\n$ bun run format`));
+    process.stdout.write(chalk.cyan(`\n$ bun run dev\n`));
+
+    process.stdout.write('\n\n');
+    process.stdout.write(chalk.green(centerText('Thank you for using Elysia CLI!')) + '\n');
+    process.stdout.write(chalk.yellow(centerText('Happy coding! 🚀')) + '\n\n');
 }

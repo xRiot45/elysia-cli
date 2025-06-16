@@ -24,13 +24,11 @@ export async function setupPrettier(projectPath: string) {
     await withSpinner(
         {
             text: 'Installing Prettier...',
-            successText: 'Prettier installed!',
+            successText: 'Prettier has been installed and is ready to format your code.',
             failText: 'Failed to install Prettier.',
         },
         async () => {
-            await runCommand(['bun', 'add', '-D', 'prettier'], projectPath);
+            await runCommand(['bun', 'add', '-D', 'prettier'], projectPath, true);
         },
     );
-
-    // logSuccess('Prettier configured');
 }

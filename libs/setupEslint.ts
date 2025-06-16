@@ -7,11 +7,15 @@ export async function setupEslint(projectPath: string) {
     await withSpinner(
         {
             text: 'Installing ESLint packages...',
-            successText: 'ESLint packages installed successfully!',
+            successText: 'ESLint installed successfully to help enforce code quality.',
             failText: 'Failed to install ESLint packages.',
         },
         async () => {
-            await runCommand(['bun', 'add', '-D', 'eslint', '@eslint/js', 'globals', 'typescript-eslint'], projectPath);
+            await runCommand(
+                ['bun', 'add', '-D', 'eslint', '@eslint/js', 'globals', 'typescript-eslint'],
+                projectPath,
+                true,
+            );
         },
     );
 

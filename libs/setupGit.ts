@@ -1,4 +1,3 @@
-import { logSuccess } from '../utils/logger';
 import { runCommand } from '../utils/runCommand';
 import { withSpinner } from '../utils/spinner';
 
@@ -10,10 +9,14 @@ export async function setupGit(projectPath: string, options: { gitRepositoryUrl?
             failText: 'Failed to initialize Git.',
         },
         async () => {
-            await runCommand(['git', 'init'], projectPath);
-            await runCommand(['git', 'add', '.'], projectPath);
-            await runCommand(['git', 'commit', '-m', 'feat: setup base project with Elysia and Bun'], projectPath);
-            await runCommand(['git', 'branch', '-M', 'main'], projectPath);
+            await runCommand(['git', 'init'], projectPath, true);
+            await runCommand(['git', 'add', '.'], projectPath, true);
+            await runCommand(
+                ['git', 'commit', '-m', 'feat: setup base project with Elysia and Bun'],
+                projectPath,
+                true,
+            );
+            await runCommand(['git', 'branch', '-M', 'main'], projectPath, true);
         },
     );
 
@@ -29,6 +32,4 @@ export async function setupGit(projectPath: string, options: { gitRepositoryUrl?
             },
         );
     }
-
-    logSuccess('Git configured');
 }
