@@ -26,8 +26,6 @@ program
         }
 
         await newProject(projectName);
-
-        chalk.green(`✅ Project created at: ${process.cwd()}/${projectName}`);
     });
 
 // TODO: Generate file
@@ -41,8 +39,6 @@ program
         }
 
         await generateFile(schematic, fileName);
-
-        chalk.green(`✅ File ${schematic} ${fileName} generated successfully!`);
     });
 
 // TODO: Display information about elysia cli
@@ -55,10 +51,15 @@ program.option('-i, --info', 'Display information about elysia-cli').action(() =
 });
 
 // TODO: Display schematics
+
 program.on('--help', () => {
-    process.stdout.write('\nSchematics:');
+    process.stdout.write(chalk.bold('\nSchematics:\n'));
+
+    const maxLength = Math.max(...Object.keys(schematics).map((k) => k.length));
+
     for (const [cmd, desc] of Object.entries(schematics)) {
-        process.stdout.write(`  ${cmd.padEnd(10)} \t\t${desc}`);
+        const padded = cmd.padEnd(maxLength + 2);
+        process.stdout.write(`  ${chalk.green(padded)}${desc}\n`);
     }
 });
 
