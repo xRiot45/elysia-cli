@@ -6,6 +6,12 @@ export async function askOptions(): Promise<Options> {
 
     const baseAnswers = await prompt<Options>([
         {
+            type: 'select',
+            name: 'projectType',
+            message: 'What kind of Elysia project do you want to create?',
+            choices: [{ name: 'rest-api', message: 'REST API' }],
+        },
+        {
             type: 'confirm',
             name: 'prettier',
             message: 'Use Prettier for code formatting? (recommended)',

@@ -9,4 +9,5 @@ export interface Options {
     commitLint?: boolean;
     database: 'mysql' | 'postgres' | 'sqlite';
     orm: 'drizzle' | 'typeorm';
+    projectType: 'web-app' | 'microservice' | 'rest-api';
 }
