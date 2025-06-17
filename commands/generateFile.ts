@@ -30,11 +30,9 @@ async function generateResources(fileName: string) {
         }
 
         spinner.succeed(`All resources for "${fileName}" generated successfully!`);
-        process.exit(0);
     } catch (err) {
         spinner.fail(`Failed to generate all resources for "${fileName}"`);
         console.error(err);
-        process.exit(1);
     }
 }
 
@@ -49,7 +47,6 @@ export async function generateFile(schematic: string, fileName: string) {
     try {
         if (!schematicsMap[schematic]) {
             spinner.fail(`Invalid schematic "${schematic}"`);
-            process.exit(1);
         }
 
         const folder = folderMap[schematic] ?? schematic;
@@ -58,7 +55,6 @@ export async function generateFile(schematic: string, fileName: string) {
 
         if (fs.existsSync(filePath)) {
             spinner.fail(`File "${schematic} ${fileName}" already exists`);
-            process.exit(1);
         }
 
         fs.mkdirSync(targetDir, { recursive: true });
@@ -66,7 +62,6 @@ export async function generateFile(schematic: string, fileName: string) {
         const templatePath = path.join(__dirname, `../templates/file/${schematic}-template.hbs`);
         if (!fs.existsSync(templatePath)) {
             spinner.fail(`Template not found: ${templatePath}`);
-            process.exit(1);
         }
 
         const templateSource = fs.readFileSync(templatePath, 'utf8');
@@ -96,6 +91,5 @@ export async function generateFile(schematic: string, fileName: string) {
     } catch (err) {
         spinner.fail(`Failed to generate ${schematic} "${fileName}"`);
         console.error(err);
-        process.exit(1);
     }
 }

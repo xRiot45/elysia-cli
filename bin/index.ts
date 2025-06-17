@@ -38,7 +38,9 @@ program
             process.exit(1);
         }
 
-        await generateFile(schematic, fileName);
+        await generateFile(schematic, fileName)
+            .then(() => process.exit(0))
+            .catch(() => process.exit(1));
     });
 
 // TODO: Display information about elysia cli
