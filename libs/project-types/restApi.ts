@@ -15,7 +15,7 @@ export async function setupRestApiProject(projectPath: string, name: string, opt
         const basePath = join(projectPath, 'src', folder);
         await mkdir(basePath, { recursive: true });
 
-        if (folder === 'database') {
+        if (folder === 'databases') {
             await mkdir(join(basePath, 'models'), { recursive: true });
         }
     }
