@@ -1,95 +1,178 @@
-# 📦 Elysia CLI Documentation
+<p align="center">
+  <img src="https://img.shields.io/badge/Bun.js-000000?style=for-the-badge&logo=bun&logoColor=white" alt="bun.js" />
+  <img src="https://img.shields.io/badge/Elysia.js-ff69b4?style=for-the-badge&logo=elysia&logoColor=white" alt="elysia.js" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="typescript" />
+</p>
 
-**Elysia CLI** is a simple command-line interface for scaffolding backend projects using the [Elysia JS Framework](https://elysiajs.com/). It helps you quickly bootstrap a REST API project with optional tooling and structure, including code formatting, linting, Git initialization, and file generation based on predefined templates.
+<h2 align="center">Elysia JS CLI</h2>
+
+<p align="center">
+Elysia JS CLI is a Command Line Interface (CLI) tool designed to make it easier and faster to create projects using Elysia JS Framework.
+</p>
+
+---
+
+## 📋 Table of Contents
+
+1. 🤖 [Introduction](#introduction)
+2. ⚙️ [Tech Stack](#tech-stack)
+3. 📌 [Features](#features)
+4. 🧸 [Quick Start](#quick-start)
+5. 📜 [CLI Usage](#cli-usage)
+6. 📦 [Project Structure](#project-structure)
+7. 🔗 [Links](#links)
+
+---
+
+## 🤖 Introduction
+
+**Elysia JS CLI** is a developer-friendly CLI tool that simplifies and accelerates the process of scaffolding new projects using the Elysia JS Framework.
+
+It helps developers to:
+
+- Scaffold fully configured projects following industry best practices.
+- Automate repetitive setup tasks such as creating folder structures, configuration files, installing dependencies, and more.
+- Focus more on building core application features instead of spending time on initial setup.
+
+Whether you're starting a prototype or a production-ready app, **Elysia JS CLI** provides a smooth and efficient starting point for both beginners and experienced developers.
+
+---
+
+## ⚙️ Tech Stack
+
+- **Bun JS** : Ultra-fast JavaScript runtime.
+- **Elysia JS** : Minimalist and fast web framework.
+- **TypeScript** : Type-safe JavaScript superset.
 
 ---
 
 ## 📌 Features
 
-- ✅ Choose project type (currently only **REST API** supported)
-- ✅ Select optional tools:
+- **Project Type Selection**
 
-    - [Prettier](https://prettier.io/) – for code formatting
-    - [ESLint](https://eslint.org/) – for code linting
-    - [Husky](https://typicode.github.io/husky/) & Commitlint – for conventional commits
+    - Currently supports **REST API** scaffolding (more types coming soon).
 
-- ✅ Select database (currently only **MySQL**)
-- ✅ Select ORM (currently only **Drizzle ORM**)
-- ✅ Initialize Git repository
-- ✅ Generate boilerplate files using schematics
+- **Optional Tools Integration**
+
+    - Prettier – Code formatting.
+    - ESLint – Code linting and static analysis.
+    - Husky – Git hooks integration.
+    - Commitlint – Enforce conventional commits.
+
+- **Database Support**
+
+    - MySQL (more databases coming soon).
+
+- **ORM Integration**
+
+    - Drizzle ORM – Type-safe SQL ORM.
+
+- **Version Control Initialization**
+
+    - Automatic Git initialization with first commit.
+
+- **Project Boilerplate Generation**
+
+    - Predefined folder structure, config files, sample code using schematics.
+
+- **Environment Configuration**
+
+    - Auto-generate `.env` template file.
+
+- **Interactive CLI**
+
+    - Smooth, intuitive question-based setup.
 
 ---
 
-## 🚀 Installation
+## 🧸 Quick Start
+
+### 1. Prerequisites
+
+- [Git](https://git-scm.com/)
+- [Bun](https://bun.sh/)
+
+### 2. Installation
 
 ```bash
 bun install -g elysia-js-cli
 ```
 
----
-
-## 🛠️ CLI Usage
+### 3. Create New Project
 
 ```bash
-elysia [options] [command]
+elysia new <projectName>
+```
+
+### 4. CLI Interactive Questions
+
+- **Project type** : REST API
+- **Use Prettier?** : (Y/n)
+- **Use ESLint?** : (Y/n)
+- **Enable Husky & Commitlint?** : (Y/n)
+- **Choose database** : MySQL
+- **Choose ORM** : Drizzle ORM
+- **Initialize Git?** : (Y/n)
+
+### 5. Running Your Project
+
+```bash
+cd <your-project>
+bun run format  # optional formatting
+bun run dev
+```
+
+### 6. Verify Setup
+
+Check server with Postman or curl:
+
+```bash
+curl http://localhost:3000
+```
+
+You should receive a successful response from your server.
+
+---
+
+## 📜 CLI Usage
+
+### Display Help
+
+```bash
+elysia -h
 ```
 
 ### Options
 
-| Option          | Description                               |
-| --------------- | ----------------------------------------- |
-| `-v, --version` | Display the current version of elysia-cli |
-| `-i, --info`    | Display information about elysia-cli      |
-| `-h, --help`    | Display help for command                  |
+| Option          | Description          |
+| --------------- | -------------------- |
+| `-v, --version` | Show current version |
+| `-i, --info`    | Show CLI information |
+| `-h, --help`    | Show help            |
 
----
+### Commands
 
-## 📁 Project Commands
+| Command                           | Description                  |
+| --------------------------------- | ---------------------------- |
+| `new <projectName>`               | Create new Elysia JS project |
+| `generate <schematic> <fileName>` | Generate new file            |
 
-### `elysia new <projectName>`
+### Available Schematics
 
-Create a new project scaffold.
-
-#### Example:
-
-```bash
-elysia new my-api
-```
-
-This will guide you through a set of prompts:
-
-- Choose project type (currently only REST API)
-- Enable Prettier? (Yes/No)
-- Enable ESLint? (Yes/No)
-- Enable Husky & Commitlint? (Yes/No)
-- Choose database (currently only MySQL)
-- Choose ORM (currently only Drizzle ORM)
-- Initialize Git repo? (Yes/No)
-
----
-
-## 🧱 File Generator
-
-### `elysia generate <schematic> <fileName>`
-
-Generate boilerplate files using schematics with pre-defined templates.
-
-#### Available Schematics:
-
-| Schematic  | Description                                                                                         |
-| ---------- | --------------------------------------------------------------------------------------------------- |
-| controller | Generate a new controller file                                                                      |
-| service    | Generate a new service file                                                                         |
-| route      | Generate a new route file                                                                           |
-| repository | Generate a new repository file                                                                      |
-| validation | Generate a new validation file                                                                      |
-| model      | Generate a new model file                                                                           |
-| interface  | Generate a new interface file                                                                       |
-| enum       | Generate a new enum file                                                                            |
-| config     | Generate a new config file                                                                          |
-| middleware | Generate a new middleware file                                                                      |
-| util       | Generate a new utility file                                                                         |
-| resources  | Generate a full set of files (controller, service, route, repository, validation, model, interface) |
+| Schematic    | Description                                               |
+| ------------ | --------------------------------------------------------- |
+| `controller` | Generate controller file                                  |
+| `service`    | Generate service file                                     |
+| `route`      | Generate route file                                       |
+| `repository` | Generate repository file                                  |
+| `validation` | Generate validation file                                  |
+| `model`      | Generate model file                                       |
+| `interface`  | Generate interface file                                   |
+| `resources`  | Generate full resources (controller, service, route, etc) |
+| `config`     | Generate config file                                      |
+| `middleware` | Generate middleware file                                  |
+| `util`       | Generate utility file                                     |
+| `enum`       | Generate enum file                                        |
 
 #### Example:
 
@@ -97,28 +180,13 @@ Generate boilerplate files using schematics with pre-defined templates.
 elysia generate controller user
 ```
 
-This will create a `user.controller.ts` file from the predefined controller template.
+This will create `src/controllers/user.controller.ts` based on template.
 
 ---
 
-## 📚 Example Workflow
+## 📦 Project Structure
 
-```bash
-# Create a new REST API project
-elysia new my-awesome-api
-
-# Generate a user controller
-elysia generate controller user
-
-# Generate full resource files for "product"
-elysia generate resources product
-```
-
----
-
-## 📦 Project Structure Example
-
-After generation, your project structure may look like this:
+Example structure after scaffolding:
 
 ```
 my-awesome-api/
@@ -153,22 +221,17 @@ my-awesome-api/
 
 ---
 
-## ✅ Conventions & Standards
+## 🔗 Links
 
-- **Code Format**: Prettier (if selected)
-- **Linting Rules**: ESLint with recommended rules (if selected)
-- **Commits**: Conventional Commits via Husky & Commitlint (if selected)
-
----
-
-## 🔧 Requirements
-
-- Node.js v18 or higher
-- npm (or yarn)
-- Git (if initializing Git repo)
+- [Elysia JS](https://elysiajs.com/)
+- [Bun](https://bun.sh/)
+- [Drizzle ORM](https://orm.drizzle.team/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Prettier](https://prettier.io/)
+- [ESLint](https://eslint.org/)
+- [Husky](https://typicode.github.io/husky/)
+- [Commitlint](https://commitlint.js.org/)
 
 ---
 
-## 📦 License
-
-MIT © \[Your Name or Organization]
+> _Note: More features coming soon!_ 🚀
