@@ -1,10 +1,11 @@
+
+<h1 align="center">Elysia JS CLI</h1>
+
 <p align="center">
   <img src="https://img.shields.io/badge/Bun.js-000000?style=for-the-badge&logo=bun&logoColor=white" alt="bun.js" />
   <img src="https://img.shields.io/badge/Elysia.js-ff69b4?style=for-the-badge&logo=elysia&logoColor=white" alt="elysia.js" />
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="typescript" />
 </p>
-
-<h2 align="center">Elysia JS CLI</h2>
 
 <p align="center">
 Elysia JS CLI is a Command Line Interface (CLI) tool designed to make it easier and faster to create projects using Elysia JS Framework.
