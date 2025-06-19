@@ -1,3 +1,5 @@
+![Screenshot from 2025-06-19 16-16-43](https://github.com/user-attachments/assets/a4bb9ad2-9f11-459e-bdde-c74c12a8bcc0)
+
 
 <h1 align="center">Elysia JS CLI</h1>
 
