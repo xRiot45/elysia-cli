@@ -1,5 +1,5 @@
 {
-    "name": "elysia-cli",
+    "name": "elysia-js-cli",
     "version": "1.0.0",
     "description": "Elysia CLI is a simple Command Line Interface created to make it easier for developers to start and manage projects using Elysia JS, a lightweight and fast web framework based on Bun.",
     "author": "Thomas Alberto",
