@@ -152,6 +152,7 @@ elysia -h
 | `-v, --version` | Show current version |
 | `-i, --info`    | Show CLI information |
 | `-h, --help`    | Show help            |
+| `-u, --update`  | update elysia js cli |
 
 ### Commands
 
