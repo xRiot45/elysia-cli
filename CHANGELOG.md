@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
     - `-v, --version`: show CLI version
     - `-i, --info`: show CLI information
     - `-h, --help`: show help menu
+    - `-u, --update`: update elysia js cli
 
 ### 📜 Note
 
