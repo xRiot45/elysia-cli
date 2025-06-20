@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+import { $ } from 'bun';
 import chalk from 'chalk';
 import { Command } from 'commander';
 import { generateFile } from '../commands/generateFile';
@@ -52,8 +53,21 @@ program.option('-i, --info', 'Display information about elysia-cli').action(() =
     process.stdout.write(`License: ${packageJson.license}\n`);
 });
 
-// TODO: Display schematics
+// TODO: Update elysia cli
+program.option('-u, --update', 'Update elysia-js-cli').action(async () => {
+    process.stdout.write(`Updating elysia-js-cli...\n`);
+    try {
+        await $`bun add -g ${packageJson.name}@latest`;
+        process.stdout.write(chalk.green('\n Update completed successfully!'));
+    } catch (error) {
+        console.error(chalk.red('\n❌ Failed to update elysia-js-cli.'));
+        console.error(error);
+        process.exit(1);
+    }
+    process.exit(0);
+});
 
+// TODO: Display schematics
 program.on('--help', () => {
     process.stdout.write(chalk.bold('\nSchematics:\n'));
 
