@@ -61,6 +61,7 @@ Whether you're starting a prototype or a production-ready app, **Elysia JS CLI**
     - ESLint – Code linting and static analysis.
     - Husky – Git hooks integration.
     - Commitlint – Enforce conventional commits.
+    - Swagger - API Documentation
 
 - **Database Support**
 
@@ -113,6 +114,7 @@ elysia new <projectName>
 - **Use Prettier?** : (Y/n)
 - **Use ESLint?** : (Y/n)
 - **Enable Husky & Commitlint?** : (Y/n)
+- **Use Swagger?** : (Y/n)
 - **Choose database** : MySQL
 - **Choose ORM** : Drizzle ORM
 - **Initialize Git?** : (Y/n)
