@@ -58,6 +58,7 @@ export async function generateFile(schematic: string, fileName: string) {
 
         if (fs.existsSync(filePath)) {
             spinner.fail(`File "${schematic} ${fileName}" already exists`);
+            return;
         }
 
         fs.mkdirSync(targetDir, { recursive: true });
