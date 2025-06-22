@@ -8,6 +8,7 @@ import { setupHusky } from '../../libs/setupHusky';
 import { setupPrettier } from '../../libs/setupPrettier';
 import { envTemplate } from '../../templates/env/env-template';
 import { Options } from '../../types/prompts';
+import { runCommand } from '../../utils/runCommand';
 import { setupMysqlDb } from '../database/setupMysqlDb';
 
 export async function setupRestApiProject(projectPath: string, name: string, options: Options) {
@@ -35,6 +36,9 @@ export async function setupRestApiProject(projectPath: string, name: string, opt
         if (options.database === 'mysql') await setupMysqlDb(projectPath);
     }
     if (options.orm === 'drizzle') await setupDrizzleOrm(projectPath, options.database);
+    if (options.swagger) {
+        await runCommand(['bun', 'add', '@elysiajs/swagger'], projectPath, true);
+    }
 
     await writeFile(join(projectPath, '.env'), envTemplate);
 
