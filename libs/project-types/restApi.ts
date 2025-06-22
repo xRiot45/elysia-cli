@@ -21,7 +21,7 @@ export async function setupRestApiProject(projectPath: string, name: string, opt
         }
     }
 
-    // Buat types template
+    // TODO: Create Types Template
     const typesPath = join(projectPath, 'src', 'types', 'index.d.ts');
     const templateTypes = join(__dirname, '../../templates/file/types-template.hbs');
     const templateSource = await readFile(templateTypes, 'utf8');
@@ -48,4 +48,18 @@ export async function setupRestApiProject(projectPath: string, name: string, opt
         useSwagger: options.swagger,
     });
     await writeFile(indexPath, indexContent);
+
+    // TODO: Create elysia-js-cli.json config after setup
+    const cliConfigPath = join(projectPath, '.elysia-js-cli.json');
+    const cliConfig = {
+        useSwagger: options.swagger ?? false,
+        useDrizzle: options.orm === 'drizzle',
+        orm: options.orm ?? null,
+        database: options.database ?? null,
+        prettier: options.prettier ?? false,
+        eslint: options.eslint ?? false,
+        husky: options.husky ?? false,
+    };
+
+    await writeFile(cliConfigPath, JSON.stringify(cliConfig, null, 2));
 }

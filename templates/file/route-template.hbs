@@ -8,8 +8,119 @@ import {
 } from '../controllers/{{ fileName }}.controller';
 
 export const {{ fileName }}Route = new Elysia({ prefix: '/{{ fileName }}' })
-  .get('/', () => findAllController())
-  .get('/:id', ({ params }) => findByIdController(Number(params.id)))
-  .post('/', ({ body }) => createController(body))
-  .put('/:id', ({ params, body }) => updateController(Number(params.id), body))
-  .delete('/:id', ({ params }) => deleteController(Number(params.id)));
+  .get(
+    '/',
+    () => findAllController(),
+    {{#if useSwagger}}
+    {
+      detail: {
+        summary: 'Get all {{ fileName }}',
+        tags: ['{{ fileName }}'],
+        responses: {
+          200: {
+            description: 'List of {{ fileName }}',
+          },
+        },
+      },
+    }
+    {{/if}}
+  )
+  .get(
+    '/:id',
+    ({ params }) => findByIdController(Number(params.id)),
+    {{#if useSwagger}}
+    {
+      detail: {
+        summary: 'Get a single {{ fileName }} by ID',
+        tags: ['{{ fileName }}'],
+        params: {
+          id: 'number',
+        },
+        responses: {
+          200: {
+            description: 'A single {{ fileName }}',
+          },
+          404: {
+            description: '{{ fileName }} not found',
+          },
+        },
+      },
+    }
+    {{/if}}
+  )
+  .post(
+    '/',
+    ({ body }) => createController(body),
+    {{#if useSwagger}}
+    {
+      detail: {
+        summary: 'Create new {{ fileName }}',
+        tags: ['{{ fileName }}'],
+        body: {
+          type: 'object',
+          required: ['exampleField'],
+          properties: {
+            exampleField: { type: 'string' },
+          },
+        },
+        responses: {
+          201: {
+            description: '{{ fileName }} created',
+          },
+        },
+      },
+    }
+    {{/if}}
+  )
+  .put(
+    '/:id',
+    ({ params, body }) => updateController(Number(params.id), body),
+    {{#if useSwagger}}
+    {
+      detail: {
+        summary: 'Update {{ fileName }} by ID',
+        tags: ['{{ fileName }}'],
+        params: {
+          id: 'number',
+        },
+        body: {
+          type: 'object',
+          properties: {
+            exampleField: { type: 'string' },
+          },
+        },
+        responses: {
+          200: {
+            description: '{{ fileName }} updated',
+          },
+          404: {
+            description: '{{ fileName }} not found',
+          },
+        },
+      },
+    }
+    {{/if}}
+  )
+  .delete(
+    '/:id',
+    ({ params }) => deleteController(Number(params.id)),
+    {{#if useSwagger}}
+    {
+      detail: {
+        summary: 'Delete {{ fileName }} by ID',
+        tags: ['{{ fileName }}'],
+        params: {
+          id: 'number',
+        },
+        responses: {
+          200: {
+            description: '{{ fileName }} deleted',
+          },
+          404: {
+            description: '{{ fileName }} not found',
+          },
+        },
+      },
+    }
+    {{/if}}
+  );
