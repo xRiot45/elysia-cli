@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.0.0] - 2025-06-22
+
+### ✨ Added
+
+- **Swagger (OpenAPI) Integration**:
+    - Added a new CLI option to enable Swagger documentation during project setup.
+    - When enabled, generated routes will automatically include OpenAPI-compliant documentation.
+    - Supports detailed endpoint documentation, including:
+        - `summary`, `tags`, `params`, `body`, and `responses`
+        - Standard HTTP response codes: `200`, `201`, `400`, `401`, `403`, `404`, `500`
+
+### 🛠 Changed
+
+- Updated `route.hbs` template to include Swagger documentation conditionally using `{{#if useSwagger}}`.
+- Enhanced response documentation structure for better consistency with OpenAPI standards.
+
+### 📜 Note
+
+- Make sure to enable the Swagger option during project setup to activate automatic documentation.
+
+---
+
 ## [v1.0.0] - 2025-06-19
 
 ### 🚀 Added
