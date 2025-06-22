@@ -30,6 +30,12 @@ export async function askOptions(): Promise<Options> {
             initial: true,
         },
         {
+            type: 'confirm',
+            name: 'swagger',
+            message: 'Do you want to use Swagger for API documentation?',
+            initial: true,
+        },
+        {
             type: 'select',
             name: 'database',
             message: 'Choose a database:',
