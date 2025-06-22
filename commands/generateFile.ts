@@ -5,6 +5,7 @@ import path from 'path';
 import { folderMap } from '../constants/folders';
 import { schematics } from '../constants/schematics';
 import { capitalize } from '../utils/capitalize';
+import { getProjectConfig } from '../utils/getProjectConfig';
 
 const schematicsMap = schematics as { [key: string]: string };
 const capitalizeFileNameSchematics = ['interface', 'enum', 'type'];
@@ -15,8 +16,10 @@ Handlebars.registerHelper('routeName', function (value: string) {
 
 function getTemplateContext(schematic: string, fileName: string) {
     const shouldCapitalize = capitalizeFileNameSchematics.includes(schematic);
+    const config = getProjectConfig();
     return {
         fileName: shouldCapitalize ? capitalize(fileName) : fileName,
+        useSwagger: config.useSwagger ?? false,
     };
 }
 
